@@ -6,5 +6,5 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
-    'MyLovelyUsersTable\\' => array($baseDir . '/src'),
+    'Inpsyde\\UsersTable\\' => array($baseDir . '/src'),
 );
