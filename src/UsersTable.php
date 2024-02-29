@@ -28,6 +28,7 @@ final class UsersTable
         add_action('init', [$this, 'registerRewriteRule']);
         add_filter('query_vars', [$this, 'addQueryVar']);
         add_action('template_redirect', [$this, 'handleTemplateRedirect']);
+        add_action('wp_enqueue_scripts', [$this, 'enqueueScriptsAndStyles']);
 
         register_activation_hook(__FILE__, [$this, 'flushRewriteRulesOnActivation']);
         register_deactivation_hook(__FILE__, 'flush_rewrite_rules');
@@ -116,6 +117,18 @@ final class UsersTable
         }
         echo '</tbody></table>';
         echo '<div id="user-details"></div>'; // Container for displaying the fetched user details
+    }
+
+    /**
+     * Enqueues scripts and styles
+     */
+    public function enqueueScriptsAndStyles(): void
+    {
+        $isOurEndpoint = intval(get_query_var('users_table', 0));
+        if ($isOurEndpoint) {
+            wp_enqueue_style('users-table-style', USERS_TABLE_PLUGIN_URL . 'dist/style.css');
+            wp_enqueue_script('users-table-script', USERS_TABLE_PLUGIN_URL . 'dist/bundle.js', array(), null, true);
+        }
     }
 
     /**
