@@ -83,16 +83,27 @@ final class UsersTable
      */
     private function fetchUsersFromApi(): array
     {
+        $transient_key = 'users_table_api_data';
+        $cached_data = get_transient($transient_key);
+    
+        if ($cached_data !== false) {
+            return $cached_data;
+        }
+    
         $response = wp_remote_get('https://jsonplaceholder.typicode.com/users');
         if (is_wp_error($response)) {
             return [];
         }
-
+    
         $body = wp_remote_retrieve_body($response);
-        $data = json_decode($body, true);
-
-        return $data ?: [];
+        $data = json_decode($body, true) ?: [];
+    
+        // Cache the API response for 12 hours
+        set_transient($transient_key, $data, 12 * HOUR_IN_SECONDS);
+    
+        return $data;
     }
+    
 
     /**
      * Displays the users table
