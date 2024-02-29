@@ -1,0 +1,15 @@
+{
+    "name": "baberparweez/users-table",
+    "authors": [
+        {
+            "name": "baberparweez",
+            "email": "baberparweez@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "MyLovelyUsersTable\\": "src/"
+        }
+    }
+}
