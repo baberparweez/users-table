@@ -1,3 +1,5 @@
-.user-detail {
-    text-decoration: none;
+.users__table {
+    &--user {
+        text-decoration: none;
+    }
 }

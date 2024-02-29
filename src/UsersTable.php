@@ -25,6 +25,7 @@ final class UsersTable
      */
     private function initHooks(): void
     {
+        // add_action('init', [$this, 'clearApiCache']);
         add_action('init', [$this, 'registerRewriteRule']);
         add_filter('query_vars', [$this, 'addQueryVar']);
         add_action('template_redirect', [$this, 'handleTemplateRedirect']);
@@ -100,10 +101,17 @@ final class UsersTable
     
         // Cache the API response for 12 hours
         set_transient($transient_key, $data, 12 * HOUR_IN_SECONDS);
-    
+
         return $data;
     }
     
+    /**
+     * Clears cached API data.
+     */
+    public function clearApiCache(): void
+    {
+        delete_transient('users_table_api_data');
+    }
 
     /**
      * Displays the users table
@@ -115,19 +123,19 @@ final class UsersTable
         echo '<link rel="stylesheet" href="' . esc_url(USERS_TABLE_PLUGIN_URL . 'dist/style.css') . '" type="text/css" media="all" />';
         echo '<script src="' . esc_url(USERS_TABLE_PLUGIN_URL . 'dist/bundle.js') . '"></script>';
 
-        echo '<table>';
+        echo '<table class="users__table">';
         echo '<thead><tr><th>ID</th><th>Name</th><th>Username</th></tr></thead>';
         echo '<tbody>';
         foreach ($users as $user) {
             echo sprintf(
-                '<tr><td><a href="#" class="user-detail" data-user-id="%s">%s</a></td><td><a href="#" class="user-detail" data-user-id="%s">%s</a></td><td><a href="#" class="user-detail" data-user-id="%s">%s</a></td></tr>',
+                '<tr><td><a href="#" class="users__table--user" data-user-id="%s">%s</a></td><td><a href="#" class="users__table--user" data-user-id="%s">%s</a></td><td><a href="#" class="users__table--user" data-user-id="%s">%s</a></td></tr>',
                 esc_attr($user['id']), esc_html($user['id']),
                 esc_attr($user['id']), esc_html($user['name']),
                 esc_attr($user['id']), esc_html($user['username'])
             );
         }
         echo '</tbody></table>';
-        echo '<div id="user-details"></div>'; // Container for displaying the fetched user details
+        echo '<div id="user-details" class="users__table--details"></div>'; // Container for displaying the fetched user details
     }
 
     /**
@@ -137,6 +145,7 @@ final class UsersTable
     {
         $isOurEndpoint = intval(get_query_var('users_table', 0));
         if ($isOurEndpoint) {
+            $version = time(); // Use filemtime() in production for cache busting based on file modification time.
             wp_enqueue_style('users-table-style', USERS_TABLE_PLUGIN_URL . 'dist/style.css');
             wp_enqueue_script('users-table-script', USERS_TABLE_PLUGIN_URL . 'dist/bundle.js', array(), null, true);
         }

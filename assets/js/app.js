@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const userLinks = document.querySelectorAll(".user-detail");
+    const userLinks = document.querySelectorAll(".users__table--user");
 
     userLinks.forEach((link) => {
         link.addEventListener("click", function (e) {
@@ -11,8 +11,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 .then((response) => response.json()) // Asynchronously parse the JSON response
                 .then((data) => {
                     // Asynchronously update the DOM with the fetched data
-                    const detailsContainer =
-                        document.getElementById("user-details");
+                    const detailsContainer = document.querySelector(
+                        ".users__table--details"
+                    );
                     detailsContainer.innerHTML = `<p>Name: ${data.name}</p><p>Email: ${data.email}</p>`;
                 })
                 .catch((error) =>
