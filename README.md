@@ -10,7 +10,7 @@ The "Users Table" plugin is designed to enhance WordPress websites by fetching u
 -   **WordPress**: 5.7 or higher
 -   **Composer**: For PHP package management
 -   **PHPUnit**: For running PHP tests
--   **WP Mock**: For mocking WordPress functions in unit tests
+-   **WP Mock**: For mocking WordPress functions in unit tests (Thanks to the 10up team!)
 -   **Node.js**: Version 19 or higher for JavaScript dependencies and running the compiler
 -   **NPM**: For managing Node.js packages
 
