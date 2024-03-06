@@ -82,7 +82,8 @@ final class UsersTable
      *
      * @return array
      */
-    public function fetchUsersFromApi(): array {
+    public function fetchUsersFromApi(): array
+    {
 
         $transient_key = 'users_table_api_data';
         $cached_data = get_transient($transient_key);
@@ -165,5 +166,5 @@ final class UsersTable
         }
 
         return self::$instance;
-    }
+    } // End instance
 }

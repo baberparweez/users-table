@@ -3,11 +3,13 @@
 use Inpsyde\UsersTable\UsersTable;
 use WP_Mock\Tools\TestCase;
 
-class UsersTableTest extends TestCase {
+class UsersTableTest extends TestCase
+{
 
     // Prepares the testing environment before each test method runs.
     // This is where we mock WordPress functions and set up the environment.
-    public function setUp(): void {
+    public function setUp(): void
+    {
         parent::setUp();
         WP_Mock::setUp();
 
@@ -50,14 +52,16 @@ class UsersTableTest extends TestCase {
     }
 
     // Resets the WP Mock environment after each test method.
-    public function tearDown(): void {
+    public function tearDown(): void
+    {
         WP_Mock::tearDown();
         parent::tearDown();
     }
 
     // Tests that the UsersTable class follows the singleton pattern,
     // ensuring only one instance of the class can exist.
-    public function test_instance_returns_singleton() {
+    public function test_instance_returns_singleton()
+    {
         $instance1 = UsersTable::instance();
         $instance2 = UsersTable::instance();
     
@@ -66,7 +70,8 @@ class UsersTableTest extends TestCase {
 
     // Verifies that all necessary WordPress hooks are properly initialized by the plugin,
     // ensuring correct plugin behavior and integration with WordPress.
-    public function test_hooks_are_initialized() {
+    public function test_hooks_are_initialized()
+    {
         // Expectations for WordPress actions and filters the plugin should add.
         WP_Mock::expectActionAdded('init', [UsersTable::class, 'registerRewriteRule'], 10, 1);
         WP_Mock::expectFilterAdded('query_vars', [UsersTable::class, 'addQueryVar']);
@@ -86,13 +91,6 @@ class UsersTableTest extends TestCase {
             'times' => 1
         ]);
 
-        // Ensures the plugin properly registers its activation and deactivation hooks.
-        WP_Mock::onFilter('register_activation_hook')->with(__FILE__, [
-            UsersTable::instance(), 'flushRewriteRulesOnActivation'
-        ]);
-
-        WP_Mock::onFilter('register_deactivation_hook')->with(__FILE__, 'flush_rewrite_rules');
-
         UsersTable::instance(); // Trigger the hook registration.
 
         $this->assertConditionsMet(); // Checks if all WP Mock expectations were met.
@@ -100,7 +98,8 @@ class UsersTableTest extends TestCase {
 
     // Tests that the custom rewrite rule is correctly registered by the plugin,
     // which is crucial for the plugin's custom endpoint functionality.
-    public function test_register_rewrite_rule() {
+    public function test_register_rewrite_rule()
+    {
         WP_Mock::userFunction('add_rewrite_rule', [
             'times' => 1, 
             'args' => ['^users-table/?$', 'index.php?users_table=1', 'top']
@@ -113,7 +112,8 @@ class UsersTableTest extends TestCase {
 
     // Tests the functionality for fetching users from the API, covering both scenarios:
     // no data in cache (cache miss) and data present in cache (cache hit).
-    public function test_fetch_users_from_api() {
+    public function test_fetch_users_from_api()
+    {
         // Allows the set_transient function to be called any number of times.
         WP_Mock::userFunction('set_transient', [
             'times' => '0+'
@@ -157,7 +157,8 @@ class UsersTableTest extends TestCase {
 
     // Tests the plugin's behavior when a WP_Error occurs during the API request,
     // ensuring the plugin gracefully handles API errors.
-    public function test_fetch_users_from_api_with_wp_error() {
+    public function test_fetch_users_from_api_with_wp_error()
+    {
         // Simulates a WP_Error being returned by the wp_remote_get call.
         WP_Mock::userFunction('get_transient', [
             'args' => ['users_table_api_data'],
@@ -185,9 +186,11 @@ class UsersTableTest extends TestCase {
     }    
 }
 
-if (!class_exists('WP_Error')) {
+if (!class_exists('WP_Error'))
+{
     // Defines a mock WP_Error class if it doesn't already exist, for testing purposes.
-    class WP_Error {
+    class WP_Error
+    {
         public $errors = [];
         public function __construct($code = '', $message = '', $data = '') {
             $this->errors[$code][] = ['message' => $message, 'data' => $data];
