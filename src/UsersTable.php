@@ -25,11 +25,9 @@ final class UsersTable
      */
     private function initHooks(): void
     {
-        // add_action('init', [$this, 'clearApiCache']);
         add_action('init', [$this, 'registerRewriteRule']);
         add_filter('query_vars', [$this, 'addQueryVar']);
         add_action('template_redirect', [$this, 'handleTemplateRedirect']);
-        add_action('wp_enqueue_scripts', [$this, 'enqueueScriptsAndStyles']);
 
         register_activation_hook(__FILE__, [$this, 'flushRewriteRulesOnActivation']);
         register_deactivation_hook(__FILE__, 'flush_rewrite_rules');
@@ -81,6 +79,8 @@ final class UsersTable
         if ($isOurEndpoint) {
             $users = $this->fetchUsersFromApi();
             $this->displayUsersTable($users);
+
+            // exit stops the page script therefore not allowing the enqueue process for scripts and styles
             exit;
         }
     }
@@ -117,20 +117,13 @@ final class UsersTable
     }
 
     /**
-     * Clears cached API data.
-     */
-    public function clearApiCache(): void
-    {
-        delete_transient('users_table_api_data');
-    }
-
-    /**
      * Displays the users table
      *
      * @param array $users
      */
     private function displayUsersTable(array $users): void
     {
+        // Scripts and styles are echoed here as 'exit;' stops the execution of 'wp_enqueue_script' for this script 
         echo '<link rel="stylesheet" href="' . esc_url(USERS_TABLE_PLUGIN_URL . 'dist/style.css') . '" type="text/css" media="all" />';
         echo '<script src="' . esc_url(USERS_TABLE_PLUGIN_URL . 'dist/bundle.js') . '"></script>';
 
@@ -150,18 +143,6 @@ final class UsersTable
         }
         echo '</tbody></table>';
         echo '<div id="user-details" aria-live="polite" class="users__table--details"></div>'; // Container for displaying the fetched user details
-    }
-
-    /**
-     * Enqueues scripts and styles
-     */
-    public function enqueueScriptsAndStyles(): void
-    {
-        $isOurEndpoint = intval(get_query_var('users_table', 0));
-        if ($isOurEndpoint) {
-            wp_enqueue_style('users-table-style', USERS_TABLE_PLUGIN_URL . 'dist/style.css');
-            wp_enqueue_script('users-table-script', USERS_TABLE_PLUGIN_URL . 'dist/bundle.js', array(), null, true);
-        }
     }
 
     /**
