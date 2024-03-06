@@ -83,15 +83,22 @@ final class UsersTable
      * @return array
      */
     public function fetchUsersFromApi(): array {
+         // Debugging statement to confirm method entry
+        error_log('Entering fetchUsersFromApi');
+
         $transient_key = 'users_table_api_data';
         $cached_data = get_transient($transient_key);
         
         if ($cached_data !== false) {
+             // Confirm cached data path
+            error_log('Returning cached data');
             return $cached_data;
         }
         
         $response = wp_remote_get('https://jsonplaceholder.typicode.com/users');
         if (is_wp_error($response) || wp_remote_retrieve_response_code($response) !== 200) {
+            // Confirm WP_Error handling
+            error_log('Encountered WP_Error');
             return []; // Make sure to return an empty array on error
         }
         
