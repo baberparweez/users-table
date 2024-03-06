@@ -79,6 +79,10 @@ To run the PHPUnit tests, navigate to your plugin directory and execute:
 
 Make sure you have a `phpunit.xml` configuration file in your plugin directory that defines the test suites.
 
+## Third-Party Code
+
+-   https://github.com/n3r4zzurr0/svg-spinners
+
 ## Contributions
 
 Contributions are welcome! Please feel free to submit pull requests or open issues to discuss proposed changes or enhancements.
