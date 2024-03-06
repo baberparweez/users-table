@@ -2,15 +2,17 @@
 
 ## Purpose
 
-The "Users Table" plugin is designed to enhance WordPress websites by fetching user data from an external API (https://jsonplaceholder.typicode.com/users) and displaying this information in a dynamic HTML table within the WordPress frontend. This plugin is ideal for administrators looking to showcase user data in an interactive, easily accessible format. It leverages WordPress's Transients API for efficient data caching and employs AJAX for seamless user detail retrieval, ensuring a smooth, engaging user experience without requiring page reloads.
+The "Users Table" plugin is designed to enhance WordPress websites by fetching user data from an external API (https://jsonplaceholder.typicode.com/users) and displaying this information in a dynamic HTML table within the WordPress frontend. It leverages WordPress's Transients API for efficient data caching and employs AJAX for seamless user detail retrieval, ensuring a smooth, engaging user experience without requiring page reloads.
 
 ## Dependencies
 
--   PHP 7.4 or higher
--   WordPress 5.7 or higher
--   Composer for PHP package management
--   PHPUnit for running PHP tests
--   Node.js and NPM for JavaScript dependencies and running the compiler
+-   **PHP**: 7.4 or higher
+-   **WordPress**: 5.7 or higher
+-   **Composer**: For PHP package management
+-   **PHPUnit**: For running PHP tests
+-   **WP Mock**: For mocking WordPress functions in unit tests
+-   **Node.js**: Version 19 or higher for JavaScript dependencies and running the compiler
+-   **NPM**: For managing Node.js packages
 
 ## Required Packages and Libraries
 
@@ -22,11 +24,16 @@ The "Users Table" plugin is designed to enhance WordPress websites by fetching u
 
 ### Setting Up the Environment
 
-1. **Install Composer**: Ensure you have Composer installed on your system. If not, follow the [official Composer installation guide](https://getcomposer.org/download/).
+1. **Install Composer**: Make sure Composer is installed on your system. If not, follow the [official Composer installation guide](https://getcomposer.org/download/).
 
-2. **Install PHPUnit**: After installing Composer, run `composer global require phpunit/phpunit` to install PHPUnit globally on your system.
+2. **Install PHPUnit and WP Mock**: After installing Composer, run the following commands to install PHPUnit and WP Mock globally on your system:
 
-3. **Install Node.js and NPM**: Download and install Node.js from the [official site](https://nodejs.org/). NPM comes bundled with Node.js.
+    ```bash
+    composer global require phpunit/phpunit
+    composer global require 10up/wp_mock:dev-master
+    ```
+
+3. **Install Node.js (v19 or higher)**: Download and install Node.js from the [official site](https://nodejs.org/). Ensure you're installing version 19 or above.
 
 ### Plugin Installation
 
