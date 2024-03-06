@@ -35,6 +35,11 @@ body {
         padding: calc(var(--site-padding) / 2);
         transition: opacity 0.2s ease;
         text-align: center;
+
+        svg {
+            fill: var(--purple);
+            margin-top: calc(var(--site-padding) / 2);
+        }
     }
 
     th,
