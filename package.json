@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "build": "webpack --mode production",
-        "start": "webpack --watch",
+        "start": "webpack --watch --mode development",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "author": "",
@@ -20,6 +20,7 @@
         "sass-loader": "^14.1.1",
         "style-loader": "^3.3.4",
         "webpack": "^5.90.3",
-        "webpack-cli": "^5.1.4"
+        "webpack-cli": "^5.1.4",
+        "webpack-merge": "^5.10.0"
     }
 }
