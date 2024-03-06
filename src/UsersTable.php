@@ -55,6 +55,14 @@ final class UsersTable
         return $vars;
     }
 
+   /**
+     * Specifically for testing hook initialisation
+     */
+    public function testInit()
+    {
+        $this->initHooks(); // Directly call the method that adds hooks
+    }
+
     /**
      * Flushes rewrite rules on plugin activation
      */
@@ -148,7 +156,6 @@ final class UsersTable
     {
         $isOurEndpoint = intval(get_query_var('users_table', 0));
         if ($isOurEndpoint) {
-            $version = time(); // Use filemtime() in production for cache busting based on file modification time.
             wp_enqueue_style('users-table-style', USERS_TABLE_PLUGIN_URL . 'dist/style.css');
             wp_enqueue_script('users-table-script', USERS_TABLE_PLUGIN_URL . 'dist/bundle.js', array(), null, true);
         }
