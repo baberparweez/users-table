@@ -55,7 +55,7 @@ final class UsersTable
         return $vars;
     }
 
-   /**
+    /**
      * Specifically for testing hook initialisation
      */
     public function testInit()
@@ -95,27 +95,27 @@ final class UsersTable
 
         $transient_key = 'users_table_api_data';
         $cached_data = get_transient($transient_key);
-        
+
         if ($cached_data !== false) {
             return $cached_data;
         }
-        
+
         $response = wp_remote_get('https://jsonplaceholder.typicode.com/users');
         if (is_wp_error($response) || wp_remote_retrieve_response_code($response) !== 200) {
             return []; // Make sure to return an empty array on error
         }
-        
+
         $body = wp_remote_retrieve_body($response);
         $data = json_decode($body, true);
         if (!is_array($data) || is_null($data)) {
             return []; // Ensure we return an empty array if $data is not valid
         }
-    
+
         set_transient($transient_key, $data, HOUR_IN_SECONDS);
-        
+
         return $data;
-    }     
-    
+    }
+
     /**
      * Clears cached API data.
      */
@@ -140,9 +140,12 @@ final class UsersTable
         foreach ($users as $user) {
             echo sprintf(
                 '<tr><td><a href="#" class="users__table--user" data-user-id="%s">%s</a></td><td><a href="#" class="users__table--user" data-user-id="%s">%s</a></td><td><a href="#" class="users__table--user" data-user-id="%s">%s</a></td></tr>',
-                esc_attr($user['id']), esc_html($user['id']),
-                esc_attr($user['id']), esc_html($user['name']),
-                esc_attr($user['id']), esc_html($user['username'])
+                esc_attr($user['id']),
+                esc_html($user['id']),
+                esc_attr($user['id']),
+                esc_html($user['name']),
+                esc_attr($user['id']),
+                esc_html($user['username'])
             );
         }
         echo '</tbody></table>';

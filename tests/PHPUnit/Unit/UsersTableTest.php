@@ -19,7 +19,7 @@ class UsersTableTest extends TestCase
         if (!defined('HOUR_IN_SECONDS')) {
             define('HOUR_IN_SECONDS', 3600);
         }
-    
+
         // Mock WordPress lifecycle hooks and functions to isolate our testing.
         WP_Mock::userFunction('register_activation_hook', [
             'times' => '0+'
@@ -48,7 +48,7 @@ class UsersTableTest extends TestCase
 
         // Simulate the transient retrieval behavior, defaulting to no cached data.
         WP_Mock::userFunction('get_transient', [
-            'args' => ['users_table_api_data'], 
+            'args' => ['users_table_api_data'],
             'return' => false
         ]);
     }
@@ -66,9 +66,9 @@ class UsersTableTest extends TestCase
     {
         $instance1 = UsersTable::instance();
         $instance2 = UsersTable::instance();
-    
+
         $this->assertSame($instance1, $instance2, 'UsersTable::instance should return the same instance.');
-    }    
+    }
 
     // Verifies that all necessary WordPress hooks are properly initialized by the plugin,
     // ensuring correct plugin behavior and integration with WordPress.
@@ -76,17 +76,17 @@ class UsersTableTest extends TestCase
     {
         $instance = UsersTable::instance();
         $instance->testInit(); // Directly initialize hooks for testing
-    
+
         // Now assert that hooks were added
         $this->assertHooksAdded();
     }
-    
+
     // Tests that the custom rewrite rule is correctly registered by the plugin,
     // which is crucial for the plugin's custom endpoint functionality.
     public function test_register_rewrite_rule()
     {
         WP_Mock::userFunction('add_rewrite_rule', [
-            'times' => 1, 
+            'times' => 1,
             'args' => ['^users-table/?$', 'index.php?users_table=1', 'top']
         ]);
 
@@ -102,17 +102,20 @@ class UsersTableTest extends TestCase
         // Allows the set_transient function to be called any number of times.
         WP_Mock::userFunction('set_transient', [
             'times' => '0+'
-        ]);   
-        
+        ]);
+
         // The expected data to be returned by the API call.
         $testData = [
             ['id' => 1, 'name' => 'Test User']
         ];
 
         // Mocks to simulate fetching data from the API and handling transient data.
-        WP_Mock::userFunction('get_transient', [
-            'args' => ['users_table_api_data'], 
-            'return' => false]
+        WP_Mock::userFunction(
+            'get_transient',
+            [
+                'args' => ['users_table_api_data'],
+                'return' => false
+            ]
         );
 
         WP_Mock::userFunction('wp_remote_get', [
@@ -130,12 +133,12 @@ class UsersTableTest extends TestCase
 
         // Simulating a cache hit scenario.
         WP_Mock::userFunction('get_transient', [
-            'args' => ['users_table_api_data'], 
+            'args' => ['users_table_api_data'],
             'return' => $testData
-        ]); 
+        ]);
 
         $cachedResult = UsersTable::instance()->fetchUsersFromApi(); // Fetching data again.
-        
+
         $this->assertIsArray($cachedResult); // Ensure cached result is still an array.
         $this->assertEquals($testData, $cachedResult); // Ensure cached data matches expected.           
     }
@@ -152,7 +155,7 @@ class UsersTableTest extends TestCase
         WP_Mock::userFunction('wp_remote_get', [
             'return' => new WP_Error('http_request_failed', 'A valid URL was not provided.'),
         ]);
-    
+
         // Ensures is_wp_error function recognizes the simulated WP_Error object.
         WP_Mock::userFunction('is_wp_error', [
             'return' => true,
@@ -162,22 +165,22 @@ class UsersTableTest extends TestCase
         WP_Mock::userFunction('wp_remote_retrieve_body', [
             'return' => json_encode([]), // Return an empty array as JSON, or a more realistic error response if applicable
         ]);
-    
+
         // Test method execution, even in error scenarios.
         $result = UsersTable::instance()->fetchUsersFromApi();
-    
+
         $this->assertIsArray($result); // Ensures method returns an array on WP_Error.
         $this->assertEmpty($result); // Ensures returned array is empty on WP_Error.
-    }    
+    }
 }
 
-if (!class_exists('WP_Error'))
-{
+if (!class_exists('WP_Error')) {
     // Defines a mock WP_Error class if it doesn't already exist, for testing purposes.
     class WP_Error
     {
         public $errors = [];
-        public function __construct($code = '', $message = '', $data = '') {
+        public function __construct($code = '', $message = '', $data = '')
+        {
             $this->errors[$code][] = ['message' => $message, 'data' => $data];
         }
     }
