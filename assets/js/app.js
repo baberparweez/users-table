@@ -19,10 +19,31 @@ document.addEventListener("DOMContentLoaded", function () {
                     return response.json();
                 })
                 .then((data) => {
+                    console.log(data);
                     // Update the DOM with user details
                     detailsContainer.innerHTML = `
-                        <p><strong>Name:</strong> ${data.name}</p>
-                        <p><strong>Email:</strong> ${data.email}</p>`;
+                        <div class="users__table--details_inner">
+                            <div>
+                                <h3>${data.name}</h3>
+                                <p>${data.phone}</p>
+                                <p>${data.email}</p>
+                                <p>${data.website}</p>
+                            </div>
+                            <div>
+                                <h3>Address</h3>
+                                <p>${data.address.city}</p>
+                                <p>${data.address.street}</p>
+                                <p>${data.address.suite}</p>
+                                <p>${data.address.zipcode}</p>
+                            </div>
+                            <div>
+                                <h3>Company</h3>
+                                <p>${data.company.name}</p>
+                                <p>${data.company.catchPhrase}</p>
+                                <p>${data.company.bs}</p>
+                            </div>
+                        </div>
+                    `;
                 })
                 .catch((error) => {
                     console.error("Error fetching user details:", error);
