@@ -41,7 +41,7 @@ body {
             border: 1px solid var(--purple);
             display: flex;
             flex-direction: column;
-            gap: calc(var(--site-padding));
+            gap: var(--site-padding);
             padding: var(--site-padding);
             width: 100%;
 
@@ -50,6 +50,10 @@ body {
                 justify-content: center;
                 gap: calc(var(--site-padding) * 4);
                 width: auto;
+            }
+
+            h3 {
+                margin-bottom: calc(var(--site-padding) / 4);
             }
         }
 
