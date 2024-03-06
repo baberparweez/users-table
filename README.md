@@ -2,23 +2,24 @@
 
 ## Purpose
 
-The "Users Table" plugin is designed to enhance WordPress websites by fetching user data from an external API (https://jsonplaceholder.typicode.com/users) and displaying this information in a dynamic HTML table within the WordPress frontend. It leverages WordPress's Transients API for efficient data caching and employs AJAX for seamless user detail retrieval, ensuring a smooth, engaging user experience without requiring page reloads.
+The "Users Table" WordPress plugin dynamically displays a table of users fetched from an external API (https://jsonplaceholder.typicode.com/users) on the WordPress frontend. This table showcases user details such as ID, name, and username. Users can click on these details to view more information about each user without reloading the page, thanks to AJAX calls.
 
-## Dependencies
+## Features
 
--   **PHP**: 7.4 or higher
--   **WordPress**: 5.7 or higher
--   **Composer**: For PHP package management
--   **PHPUnit**: Version 8.5.37 for running PHP tests
+-   **Custom Endpoint**: The plugin introduces a custom endpoint (/users-table/) to WordPress, displaying the users' table.
+-   **AJAX-Enabled Detail View**: Clicking on a user detail fetches and displays additional information asynchronously.
+-   **Caching**: Implements caching for API responses using WordPress Transients API, enhancing performance and reducing API call frequency.
+-   **Extensible and Customisable**: Offers hooks for further customization and extension by developers.
+
+## Technical Requirements
+
+-   **PHP 8.0 or higher**: Utilizes modern PHP features for improved performance and security.
+-   **WordPress 5.7 or higher**: Ensures compatibility with recent WordPress features and improvements.
+-   **Composer**: For managing PHP dependencies.
+-   **PHPUnit**: Version 8.5.37 for unit tests ensuring code quality and reliability.
 -   **WP Mock**: For mocking WordPress functions in unit tests (Thanks to the 10up team!)
--   **Node.js**: Version 19 or higher for JavaScript dependencies and running the compiler
+-   **Node.js (v19 or higher)**: Required for compiling JavaScript assets.
 -   **NPM**: For managing Node.js packages
-
-## Required Packages and Libraries
-
--   `wp_remote_get` for fetching data from the external API
--   WordPress Transients API for caching responses
--   jQuery (comes with WordPress) for AJAX calls in the frontend
 
 ## Installation
 
@@ -86,3 +87,7 @@ Make sure you have a `phpunit.xml` configuration file in your plugin directory t
 ## Contributions
 
 Contributions are welcome! Please feel free to submit pull requests or open issues to discuss proposed changes or enhancements.
+
+## License
+
+This project is open-sourced under the MIT License

@@ -146,7 +146,7 @@ final class UsersTable
             );
         }
         echo '</tbody></table>';
-        echo '<div id="user-details" class="users__table--details"></div>'; // Container for displaying the fetched user details
+        echo '<div id="user-details" aria-live="polite" class="users__table--details"></div>'; // Container for displaying the fetched user details
     }
 
     /**
