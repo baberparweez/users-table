@@ -80,6 +80,14 @@ To run the PHPUnit tests, navigate to your plugin directory and execute:
 
 Make sure you have a `phpunit.xml` configuration file in your plugin directory that defines the test suites.
 
+## What could have been done better
+
+-   I opted to not use any JS library like React or Vue. This was to intially save time and for a task this size, including additional libraries or frameworks would be an overkill. For a plugin that would grow over time, I would opt to use latest techniques and adopt React with Vite for this particular plugin.
+
+-   I included my assets for SCSS and JS within an index.js file. To improve, I would have split this further and included all SCSS in one parent file—with the same being done for all JS. In this plugin, I kept it simple as it worked and I applied minimal styles and JS.
+
+-   I would have created more accurate unit tests that I understand better but I used WP Mock for the very first time so it was challenging and intriguing.
+
 ## Third-Party Code
 
 -   https://github.com/n3r4zzurr0/svg-spinners
