@@ -6,22 +6,24 @@ The "Users Table" WordPress plugin dynamically displays a table of users fetched
 
 ## Features
 
--   **Custom Endpoint**: The plugin introduces a custom endpoint (/users-table/) to WordPress, displaying the users' table.
--   **AJAX-Enabled Detail View**: Clicking on a user detail fetches and displays additional information asynchronously.
--   **Caching**: Implements caching for API responses using WordPress Transients API, enhancing performance and reducing API call frequency.
--   **Extensible and Customisable**: Offers hooks for further customization and extension by developers.
+- **Custom Endpoint**: The plugin introduces a custom endpoint (/users-table/) to WordPress, displaying the users' table.
+- **AJAX-Enabled Detail View**: Clicking on a user detail fetches and displays additional information asynchronously.
+- **Caching**: Implements caching for API responses using WordPress Transients API, enhancing performance and reducing API call frequency.
+- **Extensible and Customisable**: Offers hooks for further customization and extension by developers.
 
 ## Technical Requirements
 
--   **PHP 8.0 or higher**: Utilizes modern PHP features for improved performance and security.
--   **WordPress 5.7 or higher**: Ensures compatibility with recent WordPress features and improvements.
--   **Composer**: For managing PHP dependencies.
--   **PHPUnit**: Version 8.5.37 for unit tests ensuring code quality and reliability.
--   **WP Mock**: For mocking WordPress functions in unit tests (Thanks to the 10up team!)
--   **Node.js (v19 or higher)**: Required for compiling JavaScript assets.
--   **NPM**: For managing Node.js packages
+- **PHP 8.0 or higher**: Utilizes modern PHP features for improved performance and security.
+- **WordPress 5.7 or higher**: Ensures compatibility with recent WordPress features and improvements.
+- **Composer**: For managing PHP dependencies.
+- **PHPUnit**: Version 8.5.37 for unit tests ensuring code quality and reliability.
+- **WP Mock**: For mocking WordPress functions in unit tests (Thanks to the 10up team!)
+- **Node.js (v19 or higher)**: Required for compiling JavaScript assets.
+- **NPM**: For managing Node.js packages
 
 ## Installation
+
+**NOTE:** Please flush permalinks if custom endpoint (/users-table/) is not working.
 
 ### Setting Up the Environment
 
@@ -29,10 +31,10 @@ The "Users Table" WordPress plugin dynamically displays a table of users fetched
 
 2. **Install PHPUnit and WP Mock**: After installing Composer, run the following commands to install PHPUnit and WP Mock globally on your system:
 
-    ```bash
-    composer global require phpunit/phpunit
-    composer global require 10up/wp_mock:dev-master
-    ```
+   ```bash
+   composer global require phpunit/phpunit
+   composer global require 10up/wp_mock:dev-master
+   ```
 
 3. **Install Node.js (v19 or higher)**: Download and install Node.js from the [official site](https://nodejs.org/). Ensure you're installing version 19 or above.
 
@@ -40,23 +42,23 @@ The "Users Table" WordPress plugin dynamically displays a table of users fetched
 
 1. **Download the Plugin**: Clone this repository into your WordPress plugins directory:
 
-    ```bash
-    cd wp-content/plugins
-    git clone https://github.com/baberparweez/users-table
-    ```
+   ```bash
+   cd wp-content/plugins
+   git clone https://github.com/baberparweez/users-table
+   ```
 
 2. **Install PHP Dependencies**: Navigate to the plugin directory and run Composer to install PHP dependencies:
 
-    ```bash
-    cd users-table
-    composer install
-    ```
+   ```bash
+   cd users-table
+   composer install
+   ```
 
 3. **Install JavaScript Dependencies**: Install the required Node.js packages:
 
-    ```bash
-    npm install
-    ```
+   ```bash
+   npm install
+   ```
 
 4. **Activate the Plugin**: Log into your WordPress admin dashboard, go to Plugins, and activate "Users Table."
 
@@ -82,15 +84,15 @@ Make sure you have a `phpunit.xml` configuration file in your plugin directory t
 
 ## What could have been done better
 
--   I opted to not use any JS library like React or Vue. This was to intially save time and for a task this size, including additional libraries or frameworks would be an overkill. For a plugin that would grow over time, I would opt to use latest techniques and adopt React with Vite for this particular plugin.
+- I opted to not use any JS library like React or Vue. This was to intially save time and for a task this size, including additional libraries or frameworks would be an overkill. For a plugin that would grow over time, I would opt to use latest techniques and adopt React with Vite for this particular plugin.
 
--   I included my assets for SCSS and JS within an index.js file. To improve, I would have split this further and included all SCSS in one parent file—with the same being done for all JS. In this plugin, I kept it simple as it worked and I applied minimal styles and JS.
+- I included my assets for SCSS and JS within an index.js file. To improve, I would have split this further and included all SCSS in one parent file—with the same being done for all JS. In this plugin, I kept it simple as it worked and I applied minimal styles and JS.
 
--   I would have created more accurate unit tests that I understand better but I used WP Mock for the very first time so it was challenging and intriguing.
+- I would have created more accurate unit tests that I understand better but I used WP Mock for the very first time so it was challenging and intriguing.
 
 ## Third-Party Code
 
--   https://github.com/n3r4zzurr0/svg-spinners
+- https://github.com/n3r4zzurr0/svg-spinners
 
 ## Contributions
 
