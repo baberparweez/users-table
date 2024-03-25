@@ -181,7 +181,14 @@ final class UsersTable
    */
   private function displayUsersTable(array $users): void
   {
-    echo get_header();
+    // Render the header block template
+    if (has_blocks('header')) {
+      $header_template = get_block_template('header', 'header');
+      $header_content = $header_template->render();
+      echo $header_content;
+    } else {
+      echo get_header();
+    }
     echo '<table class="users__table">';
     echo '<thead><tr><th>' . esc_html__('ID', 'users-table') . '</th><th>' . esc_html__('Name', 'users-table') . '</th><th>' . esc_html__('Username', 'users-table') . '</th></tr></thead>';
     echo '<tbody>';
@@ -196,7 +203,14 @@ final class UsersTable
     }
     echo '</tbody></table>';
     echo '<div id="user-details" aria-live="polite" class="users__table--details"></div>'; // Container for displaying the fetched user details
-    echo get_footer();
+
+    if (has_blocks('footer')) {
+      $footer_template = get_block_template('footer', 'footer');
+      $footer_content = $footer_template->render();
+      echo $footer_content;
+    } else {
+      echo get_footer();
+    }
   }
 
 
