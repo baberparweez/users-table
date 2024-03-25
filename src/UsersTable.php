@@ -189,6 +189,7 @@ final class UsersTable
     } else {
       echo get_header();
     }
+
     echo '<table class="users__table">';
     echo '<thead><tr><th>' . esc_html__('ID', 'users-table') . '</th><th>' . esc_html__('Name', 'users-table') . '</th><th>' . esc_html__('Username', 'users-table') . '</th></tr></thead>';
     echo '<tbody>';
