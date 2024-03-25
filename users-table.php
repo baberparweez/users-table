@@ -13,6 +13,7 @@ namespace BaberParweez\UsersTable;
 
 if (!class_exists(UsersTable::class) && is_readable(__DIR__ . '/vendor/autoload.php')) {
   /** @noinspection PhpIncludeInspection */
+  define('USERS_TABLE_PLUGIN_DIR', plugin_dir_path(__FILE__));
   define('USERS_TABLE_PLUGIN_URL', plugin_dir_url(__FILE__));
   require_once __DIR__ . '/vendor/autoload.php';
 }

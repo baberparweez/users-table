@@ -91,8 +91,8 @@ final class UsersTable
   public function enqueueScriptsAndStyles(): void
   {
     if ($this->isOurEndpoint()) {
-      wp_enqueue_style('users-table-style', USERS_TABLE_PLUGIN_URL . 'dist/style.css', array(), filemtime(USERS_TABLE_PLUGIN_URL . 'dist/style.css'), 'all');
-      wp_enqueue_script('users-table-script', USERS_TABLE_PLUGIN_URL . 'dist/bundle.js', array('jquery'), filemtime(USERS_TABLE_PLUGIN_URL . 'dist/bundle.js'), true);
+      wp_enqueue_style('users-table-style', USERS_TABLE_PLUGIN_URL . 'dist/style.css', array(), filemtime(USERS_TABLE_PLUGIN_DIR . 'dist/style.css'), 'all');
+      wp_enqueue_script('users-table-script', USERS_TABLE_PLUGIN_URL . 'dist/bundle.js', array('jquery'), filemtime(USERS_TABLE_PLUGIN_DIR . 'dist/bundle.js'), true);
 
       wp_localize_script('users-table-script', 'myUsersTable', array(
         'ajax_url' => admin_url('admin-ajax.php'),
