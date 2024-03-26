@@ -9,20 +9,37 @@ if (has_blocks('header')) {
     echo get_header();
 }
 
-echo '<table class="users__table">';
-echo '<thead><tr><th>' . esc_html__('ID', 'users-table') . '</th><th>' . esc_html__('Name', 'users-table') . '</th><th>' . esc_html__('Username', 'users-table') . '</th></tr></thead>';
-echo '<tbody>';
-foreach ($users as $user) {
-    echo sprintf(
-        '<tr><td><a href="#" class="users__table--user" data-user-id="%1$s">%2$s</a></td><td><a href="#" class="users__table--user" data-user-id="%1$s">%3$s</a></td><td><a href="#" class="users__table--user" data-user-id="%1$s">%4$s</a></td></tr>',
-        esc_attr($user['id']),
-        esc_html($user['id']),
-        esc_html($user['name']),
-        esc_html($user['username'])
-    );
+if (!empty($users)) {
+    echo '<table class="users__table">';
+    echo '<thead>
+        <tr>
+            <th>' . esc_html__('ID', 'users-table') . '</th>
+            <th>' . esc_html__('Name', 'users-table') . '</th>
+            <th>' . esc_html__('Username', 'users-table') . '</th>
+        </tr>
+    </thead>';
+    echo '<tbody>';
+    foreach ($users as $user) {
+        echo sprintf(
+            '<tr>
+            <td><a href="#" class="users__table--user" data-user-id="%1$s">%2$s</a></td>
+            <td><a href="#" class="users__table--user" data-user-id="%1$s">%3$s</a></td>
+            <td><a href="#" class="users__table--user" data-user-id="%1$s">%4$s</a></td>
+        </tr>',
+            esc_attr($user['id']),
+            esc_html($user['id']),
+            esc_html($user['name']),
+            esc_html($user['username'])
+        );
+    }
+    echo '</tbody></table>';
+
+
+    // Container for displaying the fetched user details
+    echo '<div id="user-details" aria-live="polite" class="users__table--details"></div>';
+} else {
+    echo 'No data available.';
 }
-echo '</tbody></table>';
-echo '<div id="user-details" aria-live="polite" class="users__table--details"></div>'; // Container for displaying the fetched user details
 
 if (has_blocks('footer')) {
     $footer_template = get_block_template('footer', 'footer');
