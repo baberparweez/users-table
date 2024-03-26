@@ -8,7 +8,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "BaberParweez\\UsersTable\\": "src/"
+            "Inpsyde\\UsersTable\\": "src/"
         }
     },
     "require-dev": {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use BaberParweez\UsersTable\UsersTable;
+use Inpsyde\UsersTable\UsersTable;
 use WP_Mock\Tools\TestCase;
 
 class UsersTableTest extends TestCase
@@ -18,6 +18,23 @@ class UsersTableTest extends TestCase
         // Defines HOUR_IN_SECONDS if not already defined, for use in transients.
         if (!defined('HOUR_IN_SECONDS')) {
             define('HOUR_IN_SECONDS', 3600);
+        }
+
+        // Define plugin_dir_path and plugin_dir_url if not defined
+        if (!function_exists('plugin_dir_path')) {
+            function plugin_dir_path($file)
+            {
+                // Return a mock path or the actual plugin path if needed
+                return __DIR__ . '/';
+            }
+        }
+
+        if (!function_exists('plugin_dir_url')) {
+            function plugin_dir_url($file)
+            {
+                // Return a mock URL or the actual plugin URL if needed
+                return 'http://example.com/wp-content/plugins/users-table/';
+            }
         }
 
         // Mock WordPress lifecycle hooks and functions to isolate our testing.

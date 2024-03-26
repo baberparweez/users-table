@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace BaberParweez\UsersTable;
+namespace Inpsyde\UsersTable;
 
 // Ensure that the autoloader is present and readable.
 if (!class_exists(UsersTable::class) && is_readable(__DIR__ . '/vendor/autoload.php')) {

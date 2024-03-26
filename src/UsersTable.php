@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace BaberParweez\UsersTable;
+namespace Inpsyde\UsersTable;
 
 final class UsersTable
 {
@@ -44,7 +44,7 @@ final class UsersTable
     /**
      * Get the plugin directory path
      */
-    public static function getPluginDirPath(): string
+    public static function pluginDirPath(): string
     {
         return self::$pluginDir;
     }
@@ -52,7 +52,7 @@ final class UsersTable
     /**
      * Get the plugin directory URL
      */
-    public static function getPluginDirUrl(): string
+    public static function pluginDirUrl(): string
     {
         return self::$pluginUrl;
     }
@@ -113,23 +113,23 @@ final class UsersTable
         if ($this->isOurEndpoint()) {
             wp_enqueue_style(
                 'users-table-style',
-                self::getPluginDirUrl() . 'dist/style.css',
-                array(),
-                filemtime(self::getPluginDirPath() . 'dist/style.css'),
+                self::pluginDirUrl() . 'dist/style.css',
+                [],
+                filemtime(self::pluginDirPath() . 'dist/style.css'),
                 'all'
             );
             wp_enqueue_script(
                 'users-table-script',
-                self::getPluginDirUrl() . 'dist/bundle.js',
-                array('jquery'),
-                filemtime(self::getPluginDirPath() . 'dist/bundle.js'),
+                self::pluginDirUrl() . 'dist/bundle.js',
+                ['jquery'],
+                filemtime(self::pluginDirPath() . 'dist/bundle.js'),
                 true
             );
 
-            $scriptParams = array(
+            $scriptParams = [
                 'ajax_url' => admin_url('admin-ajax.php'),
-                'nonce' => wp_create_nonce('fetch_user_details')
-            );
+                'nonce' => wp_create_nonce('fetch_user_details'),
+            ];
             wp_localize_script('users-table-script', 'myUsersTable', $scriptParams);
         }
     }
@@ -142,20 +142,16 @@ final class UsersTable
         check_ajax_referer('fetch_user_details', 'nonce');
 
         if (isset($_GET['user_id'])) {
-            $user_id = intval($_GET['user_id']);
+            $userId = intval($_GET['user_id']);
             $users = $this->fetchUsersFromApi();
 
-            $user_details = array_filter($users, function ($user) use ($user_id) {
-                return $user['id'] === $user_id;
+            $userDetails = array_filter($users, static function (array $user) use ($userId): bool {
+                return $user['id'] === $userId;
             });
 
-            if (!empty($user_details)) {
-                wp_send_json_success(reset($user_details));
-            } else {
-                wp_send_json_error('User not found');
+            if (!empty($userDetails)) {
+                wp_send_json_success(reset($userDetails));
             }
-        } else {
-            wp_send_json_error('Invalid request');
         }
     }
 
@@ -184,11 +180,11 @@ final class UsersTable
     public function fetchUsersFromApi(): array
     {
 
-        $transient_key = 'users_table_api_data';
-        $cached_data = get_transient($transient_key);
+        $transientKey = 'users_table_api_data';
+        $cachedData = get_transient($transientKey);
 
-        if ($cached_data !== false) {
-            return $cached_data;
+        if ($cachedData !== false) {
+            return $cachedData;
         }
 
         $response = wp_remote_get('https://jsonplaceholder.typicode.com/users');
@@ -202,7 +198,7 @@ final class UsersTable
             return []; // Ensure we return an empty array if $data is not valid
         }
 
-        set_transient($transient_key, $data, HOUR_IN_SECONDS);
+        set_transient($transientKey, $data, HOUR_IN_SECONDS);
 
         return $data;
     }
@@ -214,12 +210,10 @@ final class UsersTable
      */
     private function displayUsersTable(array $users): void
     {
-        $templatePath = self::getPluginDirPath() . 'templates/table.php';
+        $templatePath = self::pluginDirPath() . 'templates/table.php';
 
         if (file_exists($templatePath)) {
             include $templatePath;
-        } else {
-            error_log('Template file not found: ' . $templatePath);
         }
     }
 
@@ -235,5 +229,5 @@ final class UsersTable
         }
 
         return self::$instance;
-    } // End instance
+    }
 }
