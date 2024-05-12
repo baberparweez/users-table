@@ -6,3 +6,6 @@
 
 # PHPUnit
 .phpunit.result.cache
+
+# Dist folder
+/dist
